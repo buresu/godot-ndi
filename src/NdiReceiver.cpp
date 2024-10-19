@@ -37,7 +37,7 @@ void NdiReceiver::_bind_methods() {
 
 NdiReceiver::NdiReceiver()
     : _is_running(true), _bandwidth(NdiInputStream::HIGHEST) {
-  _ndi_input_stream = memnew(NdiInputStream);
+  _ndi_input_stream.instantiate();
   _ndi_input_stream->set_source_name("test");
   _ndi_input_stream->open();
 
@@ -48,7 +48,6 @@ NdiReceiver::NdiReceiver()
 
 NdiReceiver::~NdiReceiver() {
   stop();
-  memdelete(_ndi_input_stream);
 
   // Disconnect from the frame_post_draw signal
   RenderingServer::get_singleton()->disconnect(

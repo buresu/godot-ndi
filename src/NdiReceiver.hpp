@@ -11,7 +11,7 @@ class NdiReceiver : public Resource {
   GDCLASS(NdiReceiver, Resource)
 
 private:
-  NdiInputStream *_ndi_input_stream;
+  Ref<NdiInputStream> _ndi_input_stream;
   Ref<ImageTexture> _target_texture;
   bool _is_running;
   String _source_name;

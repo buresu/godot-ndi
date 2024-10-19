@@ -8,12 +8,9 @@
 
 using namespace godot;
 
-NdiInputStream::NdiInputStream() : Object() { _mutex = memnew(Mutex); }
+NdiInputStream::NdiInputStream() : RefCounted() { _mutex.instantiate(); }
 
-NdiInputStream::~NdiInputStream() {
-  close();
-  memdelete(_mutex);
-}
+NdiInputStream::~NdiInputStream() { close(); }
 
 void NdiInputStream::_bind_methods() {
   ClassDB::bind_method(D_METHOD("open"), &NdiInputStream::open);
@@ -36,7 +33,7 @@ void NdiInputStream::_bind_methods() {
 void NdiInputStream::open() {
   if (_thread == nullptr) {
     _should_exit = false;
-    _thread = memnew(Thread);
+    _thread.instantiate();
     _thread->start(Callable(this, "_thread_function"));
   }
 }
@@ -45,8 +42,7 @@ void NdiInputStream::close() {
   if (_thread != nullptr) {
     _should_exit = true;
     _thread->wait_to_finish();
-    memdelete(_thread);
-    _thread = nullptr;
+    _thread.unref();
   }
 }
 

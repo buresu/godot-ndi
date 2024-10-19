@@ -3,12 +3,13 @@
 #include <godot_cpp/classes/image.hpp>
 #include <godot_cpp/classes/mutex.hpp>
 #include <godot_cpp/classes/object.hpp>
+#include <godot_cpp/classes/ref_counted.hpp>
 #include <godot_cpp/classes/thread.hpp>
 
 namespace godot {
 
-class NdiInputStream : public Object {
-  GDCLASS(NdiInputStream, Object)
+class NdiInputStream : public RefCounted {
+  GDCLASS(NdiInputStream, RefCounted)
 public:
   enum Bandwidth { HIGHEST, LOWEST };
 
@@ -28,8 +29,8 @@ protected:
   static void _bind_methods();
 
 private:
-  Thread *_thread = nullptr;
-  Mutex *_mutex = nullptr;
+  Ref<Thread> _thread;
+  Ref<Mutex> _mutex;
   Ref<Image> _frame;
   uint64_t _frame_count = 0;
   String _source_name;
