@@ -9,7 +9,7 @@
 
 using namespace godot;
 
-NdiSourceFinder::NdiSourceFinder() : _thread(nullptr), _mutex(nullptr), _should_exit(false) {
+NdiSourceFinder::NdiSourceFinder() : Object() {
     _mutex = memnew(Mutex);
 }
 
