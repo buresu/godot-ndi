@@ -17,8 +17,6 @@ private:
     bool _should_exit = false;
     HashMap<String, void*> _source_map;
 
-    void _thread_function();
-
 protected:
     static void _bind_methods();
 
@@ -29,6 +27,7 @@ public:
     void start();
     void stop();
     Dictionary get_source_map() const;
+    void _thread_function();
 };
 
 }

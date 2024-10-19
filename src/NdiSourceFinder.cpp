@@ -14,6 +14,7 @@ void NdiSourceFinder::_bind_methods() {
     ClassDB::bind_method(D_METHOD("start"), &NdiSourceFinder::start);
     ClassDB::bind_method(D_METHOD("stop"), &NdiSourceFinder::stop);
     ClassDB::bind_method(D_METHOD("get_source_map"), &NdiSourceFinder::get_source_map);
+    ClassDB::bind_method(D_METHOD("_thread_function"), &NdiSourceFinder::_thread_function);
 }
 
 NdiSourceFinder::NdiSourceFinder() : Object() {
