@@ -43,7 +43,7 @@ Dictionary NdiSourceFinder::get_source_map() const {
   Dictionary result;
   _mutex->lock();
   for (const KeyValue<String, void *> &E : _source_map) {
-    result[E.key] = E.value;
+    result[E.key] = reinterpret_cast<uint64_t>(E.value);
   }
   _mutex->unlock();
   return result;
