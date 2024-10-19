@@ -1,0 +1,18 @@
+[configuration]
+
+entry_symbol = "ndi_library_init"
+compatibility_minimum = "4.3"
+
+[libraries]
+
+linux.debug.x86_64 = "res://godot-ndi/libGodotNdid.so"
+linux.release.x86_64 = "res://godot-ndi/libGodotNdi.so"
+
+[dependencies]
+
+linux.debug = {
+    "res://godot-ndi/libndi.so.6.0.1" : "",
+}
+linux.release = {
+    "res://godot-ndi/libndi.so.6.0.1" : "",
+}
