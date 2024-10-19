@@ -1,6 +1,8 @@
 #include "register_types.hpp"
 #include "NdiSourceFinder.hpp"
 #include "NdiManager.hpp"
+#include "NdiInputStream.hpp"
+#include "NdiReceiver.hpp"
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/engine.hpp>
@@ -16,6 +18,8 @@ void initialize_ndi_module(ModuleInitializationLevel p_level) {
 
     ClassDB::register_class<NdiSourceFinder>();
     ClassDB::register_class<NdiManager>();
+    ClassDB::register_class<NdiInputStream>();
+    ClassDB::register_class<NdiReceiver>();
 
     ndi_manager_singleton = memnew(NdiManager);
     Engine::get_singleton()->register_singleton("NdiManager", ndi_manager_singleton);
