@@ -11,12 +11,12 @@
 using namespace godot;
 
 void NdiSourceFinder::_bind_methods() {
+  ClassDB::bind_method(D_METHOD("_thread_function"),
+                       &NdiSourceFinder::_thread_function);
   ClassDB::bind_method(D_METHOD("start"), &NdiSourceFinder::start);
   ClassDB::bind_method(D_METHOD("stop"), &NdiSourceFinder::stop);
   ClassDB::bind_method(D_METHOD("get_source_map"),
                        &NdiSourceFinder::get_source_map);
-  ClassDB::bind_method(D_METHOD("_thread_function"),
-                       &NdiSourceFinder::_thread_function);
 }
 
 NdiSourceFinder::NdiSourceFinder() : Object() { _mutex = memnew(Mutex); }
@@ -30,8 +30,7 @@ void NdiSourceFinder::start() {
   if (_thread == nullptr) {
     _should_exit = false;
     _thread = memnew(Thread);
-    Callable callable = Callable(this, "_thread_function");
-    _thread->start(callable);
+    _thread->start(Callable(this, "_thread_function"));
   }
 }
 
@@ -55,6 +54,7 @@ Dictionary NdiSourceFinder::get_source_map() const {
 }
 
 void NdiSourceFinder::_thread_function() {
+
   NDIlib_find_instance_t find = NDIlib_find_create_v2();
 
   while (find && !_should_exit) {

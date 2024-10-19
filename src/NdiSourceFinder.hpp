@@ -18,16 +18,17 @@ private:
   HashMap<String, void *> _source_map;
 
 protected:
+  void _thread_function();
   static void _bind_methods();
 
 public:
   NdiSourceFinder();
-  ~NdiSourceFinder();
+  virtual ~NdiSourceFinder() override;
 
   void start();
   void stop();
+
   Dictionary get_source_map() const;
-  void _thread_function();
 };
 
 } // namespace godot
