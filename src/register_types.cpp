@@ -1,9 +1,8 @@
 #include "register_types.hpp"
+#include "NdiManager.hpp"
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/engine.hpp>
-
-#include "NdiManager.hpp"
 
 using namespace godot;
 
@@ -14,7 +13,9 @@ void initialize_ndi_module(ModuleInitializationLevel p_level) {
         return;
     }
 
-    ndi_manager_singleton = NdiManager::get_singleton();
+    ClassDB::register_class<NdiManager>();
+
+    ndi_manager_singleton = memnew(NdiManager);
     Engine::get_singleton()->register_singleton("NdiManager", ndi_manager_singleton);
 
     ndi_manager_singleton->initialize();
