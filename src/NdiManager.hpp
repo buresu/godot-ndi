@@ -1,6 +1,7 @@
 #pragma once
 
 #include <godot_cpp/classes/object.hpp>
+#include <godot_cpp/classes/ref.hpp>
 #include <godot_cpp/templates/vector.hpp>
 #include <godot_cpp/variant/string.hpp>
 
@@ -12,7 +13,7 @@ class NdiManager : public Object {
   GDCLASS(NdiManager, Object)
 private:
   static NdiManager *singleton;
-  NdiSourceFinder *_sourceFinder = nullptr;
+  Ref<NdiSourceFinder> _sourceFinder;
 
 protected:
   static void _bind_methods();

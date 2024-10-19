@@ -19,7 +19,7 @@ void NdiSourceFinder::_bind_methods() {
                        &NdiSourceFinder::get_source_map);
 }
 
-NdiSourceFinder::NdiSourceFinder() : Object() { _mutex.instantiate(); }
+NdiSourceFinder::NdiSourceFinder() : RefCounted() { _mutex.instantiate(); }
 
 NdiSourceFinder::~NdiSourceFinder() { stop(); }
 

@@ -32,15 +32,14 @@ void NdiManager::initialize() {
     UtilityFunctions::printerr("NDIlib is not initialized");
     return;
   }
-  _sourceFinder = memnew(NdiSourceFinder);
+  _sourceFinder.instantiate();
   _sourceFinder->start();
 }
 
 void NdiManager::finalize() {
   if (_sourceFinder != nullptr) {
     _sourceFinder->stop();
-    memdelete(_sourceFinder);
-    _sourceFinder = nullptr;
+    _sourceFinder.unref();
   }
   NDIlib_destroy();
 }

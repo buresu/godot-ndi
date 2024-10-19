@@ -1,7 +1,6 @@
 #pragma once
 
-#include <godot_cpp/classes/object.hpp>
-#include <godot_cpp/classes/ref.hpp>
+#include <godot_cpp/classes/ref_counted.hpp>
 #include <godot_cpp/templates/hash_map.hpp>
 #include <godot_cpp/variant/string.hpp>
 
@@ -10,8 +9,8 @@ namespace godot {
 class Thread;
 class Mutex;
 
-class NdiSourceFinder : public Object {
-  GDCLASS(NdiSourceFinder, Object)
+class NdiSourceFinder : public RefCounted {
+  GDCLASS(NdiSourceFinder, RefCounted)
 private:
   Ref<Thread> _thread;
   Ref<Mutex> _mutex;
