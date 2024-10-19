@@ -1,5 +1,6 @@
 #pragma once
 
+#include <godot_cpp/classes/object.hpp>
 #include <godot_cpp/classes/ref_counted.hpp>
 #include <godot_cpp/templates/vector.hpp>
 #include <godot_cpp/variant/string.hpp>
@@ -10,13 +11,17 @@ namespace godot {
 
 class NdiSourceFinder;
 
-class NdiManager : public RefCounted {
-    GDCLASS(NdiManager, RefCounted)
+class NdiManager : public Object {
+    GDCLASS(NdiManager, Object)
 private:
+    static NdiManager* singleton;
     Ref<NdiSourceFinder> _sourceFinder;
 
-public:
     NdiManager();
+
+public:
+    static NdiManager* get_singleton();
+    
     ~NdiManager();
 
     void initialize();

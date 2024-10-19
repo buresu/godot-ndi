@@ -7,10 +7,19 @@
 
 using namespace godot;
 
-NdiManager::NdiManager() : _sourceFinder(nullptr) {}
+NdiManager* NdiManager::singleton = nullptr;
+
+NdiManager::NdiManager() : _sourceFinder(nullptr) {
+    singleton = this;
+}
 
 NdiManager::~NdiManager() {
     finalize();
+    singleton = nullptr;
+}
+
+NdiManager* NdiManager::get_singleton() {
+    return singleton;
 }
 
 void NdiManager::initialize() {
