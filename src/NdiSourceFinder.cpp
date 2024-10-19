@@ -19,17 +19,14 @@ void NdiSourceFinder::_bind_methods() {
                        &NdiSourceFinder::get_source_map);
 }
 
-NdiSourceFinder::NdiSourceFinder() : Object() { _mutex = memnew(Mutex); }
+NdiSourceFinder::NdiSourceFinder() : Object() { _mutex.instantiate(); }
 
-NdiSourceFinder::~NdiSourceFinder() {
-  stop();
-  memdelete(_mutex);
-}
+NdiSourceFinder::~NdiSourceFinder() { stop(); }
 
 void NdiSourceFinder::start() {
   if (_thread == nullptr) {
     _should_exit = false;
-    _thread = memnew(Thread);
+    _thread.instantiate();
     _thread->start(Callable(this, "_thread_function"));
   }
 }
@@ -38,8 +35,7 @@ void NdiSourceFinder::stop() {
   if (_thread != nullptr) {
     _should_exit = true;
     _thread->wait_to_finish();
-    memdelete(_thread);
-    _thread = nullptr;
+    _thread.unref();
   }
 }
 
@@ -70,7 +66,13 @@ void NdiSourceFinder::_thread_function() {
     }
     _mutex->unlock();
 
-    OS::get_singleton()->delay_msec(5000); // 5 seconds delay
+    // 5 seconds delay
+    for (int i = 0; i < 50; ++i) {
+      if (_should_exit) {
+        break;
+      }
+      OS::get_singleton()->delay_msec(100);
+      }
   }
 
   if (find) {

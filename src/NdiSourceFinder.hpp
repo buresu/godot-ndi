@@ -1,6 +1,7 @@
 #pragma once
 
 #include <godot_cpp/classes/object.hpp>
+#include <godot_cpp/classes/ref.hpp>
 #include <godot_cpp/templates/hash_map.hpp>
 #include <godot_cpp/variant/string.hpp>
 
@@ -12,8 +13,8 @@ class Mutex;
 class NdiSourceFinder : public Object {
   GDCLASS(NdiSourceFinder, Object)
 private:
-  Thread *_thread = nullptr;
-  Mutex *_mutex = nullptr;
+  Ref<Thread> _thread;
+  Ref<Mutex> _mutex;
   bool _should_exit = false;
   HashMap<String, void *> _source_map;
 
