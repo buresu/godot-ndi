@@ -17,7 +17,7 @@ else()
     set(BITS "32")
 endif()
 
-add_subdirectory("${PROJECT_SOURCE_DIR}/lib/godot-cpp")
+#add_subdirectory("${PROJECT_SOURCE_DIR}/lib/godot-cpp")
 
 find_package(NDI REQUIRED)
 
