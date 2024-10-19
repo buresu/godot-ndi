@@ -1,5 +1,6 @@
 #include "NdiSourceFinder.hpp"
 
+#include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/os.hpp>
 #include <godot_cpp/classes/mutex.hpp>
 #include <godot_cpp/classes/thread.hpp>
@@ -8,6 +9,12 @@
 #include <Processing.NDI.Lib.h>
 
 using namespace godot;
+
+void NdiSourceFinder::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("start"), &NdiSourceFinder::start);
+    ClassDB::bind_method(D_METHOD("stop"), &NdiSourceFinder::stop);
+    ClassDB::bind_method(D_METHOD("get_source_map"), &NdiSourceFinder::get_source_map);
+}
 
 NdiSourceFinder::NdiSourceFinder() : Object() {
     _mutex = memnew(Mutex);

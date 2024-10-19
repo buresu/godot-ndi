@@ -19,6 +19,9 @@ private:
 
     void _thread_function();
 
+protected:
+    static void _bind_methods();
+
 public:
     NdiSourceFinder();
     ~NdiSourceFinder();

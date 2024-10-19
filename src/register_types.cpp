@@ -1,4 +1,5 @@
 #include "register_types.hpp"
+#include "NdiSourceFinder.hpp"
 #include "NdiManager.hpp"
 
 #include <godot_cpp/core/class_db.hpp>
@@ -13,6 +14,7 @@ void initialize_ndi_module(ModuleInitializationLevel p_level) {
         return;
     }
 
+    ClassDB::register_class<NdiSourceFinder>();
     ClassDB::register_class<NdiManager>();
 
     ndi_manager_singleton = memnew(NdiManager);
