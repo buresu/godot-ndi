@@ -96,6 +96,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+### macOS Patch ###
+# iCloud generated files
+*.icloud
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
