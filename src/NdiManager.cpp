@@ -8,64 +8,61 @@
 
 using namespace godot;
 
-NdiManager* NdiManager::singleton = nullptr;
+NdiManager *NdiManager::singleton = nullptr;
 
 void NdiManager::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("initialize"), &NdiManager::initialize);
-    ClassDB::bind_method(D_METHOD("finalize"), &NdiManager::finalize);
-    ClassDB::bind_method(D_METHOD("available_sources"), &NdiManager::available_sources);
-    ClassDB::bind_method(D_METHOD("get_source", "name"), &NdiManager::get_source);
+  ClassDB::bind_method(D_METHOD("initialize"), &NdiManager::initialize);
+  ClassDB::bind_method(D_METHOD("finalize"), &NdiManager::finalize);
+  ClassDB::bind_method(D_METHOD("available_sources"),
+                       &NdiManager::available_sources);
+  ClassDB::bind_method(D_METHOD("get_source", "name"), &NdiManager::get_source);
 }
 
-NdiManager::NdiManager() : Object(){
-    singleton = this;
-}
+NdiManager::NdiManager() : Object() { singleton = this; }
 
 NdiManager::~NdiManager() {
-    finalize();
-    singleton = nullptr;
+  finalize();
+  singleton = nullptr;
 }
 
-NdiManager* NdiManager::get_singleton() {
-    return singleton;
-}
+NdiManager *NdiManager::get_singleton() { return singleton; }
 
 void NdiManager::initialize() {
-    if (!NDIlib_initialize()) {
-        UtilityFunctions::printerr("NDIlib is not initialized");
-        return;
-    }
-    _sourceFinder = memnew(NdiSourceFinder);
-    _sourceFinder->start();
+  if (!NDIlib_initialize()) {
+    UtilityFunctions::printerr("NDIlib is not initialized");
+    return;
+  }
+  _sourceFinder = memnew(NdiSourceFinder);
+  _sourceFinder->start();
 }
 
 void NdiManager::finalize() {
-    if (_sourceFinder != nullptr) {
-        _sourceFinder->stop();
-        memdelete(_sourceFinder);
-        _sourceFinder = nullptr;
-    }
-    NDIlib_destroy();
+  if (_sourceFinder != nullptr) {
+    _sourceFinder->stop();
+    memdelete(_sourceFinder);
+    _sourceFinder = nullptr;
+  }
+  NDIlib_destroy();
 }
 
 TypedArray<String> NdiManager::available_sources() const {
-    TypedArray<String> sources;
-    if (_sourceFinder != nullptr) {
-        Dictionary source_map = _sourceFinder->get_source_map();
-        Array keys = source_map.keys();
-        for (int i = 0; i < keys.size(); i++) {
-            sources.push_back(keys[i]);
-        }
+  TypedArray<String> sources;
+  if (_sourceFinder != nullptr) {
+    Dictionary source_map = _sourceFinder->get_source_map();
+    Array keys = source_map.keys();
+    for (int i = 0; i < keys.size(); i++) {
+      sources.push_back(keys[i]);
     }
-    return sources;
+  }
+  return sources;
 }
 
 Variant NdiManager::get_source(const String &name) const {
-    if (_sourceFinder != nullptr) {
-        Dictionary source_map = _sourceFinder->get_source_map();
-        if (source_map.has(name)) {
-            return source_map[name];
-        }
+  if (_sourceFinder != nullptr) {
+    Dictionary source_map = _sourceFinder->get_source_map();
+    if (source_map.has(name)) {
+      return source_map[name];
     }
-    return Variant();
+  }
+  return Variant();
 }

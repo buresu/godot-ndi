@@ -23,6 +23,8 @@ find_package(NDI REQUIRED)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.hpp")
 
+source_group("" FILES ${SOURCES} ${INCLUDES})
+
 add_library(GodotNdi SHARED ${SOURCES})
 
 set_target_properties(GodotNdi PROPERTIES DEBUG_POSTFIX d)

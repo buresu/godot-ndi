@@ -9,25 +9,25 @@ namespace godot {
 class Thread;
 class Mutex;
 
-class NdiSourceFinder  : public Object  {
-    GDCLASS(NdiSourceFinder, Object)
+class NdiSourceFinder : public Object {
+  GDCLASS(NdiSourceFinder, Object)
 private:
-    Thread* _thread = nullptr;
-    Mutex* _mutex = nullptr;
-    bool _should_exit = false;
-    HashMap<String, void*> _source_map;
+  Thread *_thread = nullptr;
+  Mutex *_mutex = nullptr;
+  bool _should_exit = false;
+  HashMap<String, void *> _source_map;
 
 protected:
-    static void _bind_methods();
+  static void _bind_methods();
 
 public:
-    NdiSourceFinder();
-    ~NdiSourceFinder();
+  NdiSourceFinder();
+  ~NdiSourceFinder();
 
-    void start();
-    void stop();
-    Dictionary get_source_map() const;
-    void _thread_function();
+  void start();
+  void stop();
+  Dictionary get_source_map() const;
+  void _thread_function();
 };
 
-}
+} // namespace godot

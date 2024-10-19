@@ -9,24 +9,24 @@ namespace godot {
 class NdiSourceFinder;
 
 class NdiManager : public Object {
-    GDCLASS(NdiManager, Object)
+  GDCLASS(NdiManager, Object)
 private:
-    static NdiManager* singleton;
-    NdiSourceFinder *_sourceFinder = nullptr;
+  static NdiManager *singleton;
+  NdiSourceFinder *_sourceFinder = nullptr;
 
 protected:
-    static void _bind_methods();
+  static void _bind_methods();
 
 public:
-    static NdiManager* get_singleton();
-    
-    NdiManager();
-    virtual ~NdiManager() override;
+  static NdiManager *get_singleton();
 
-    void initialize();
-    void finalize();
-    TypedArray<String> available_sources() const;
-    Variant get_source(const String &name) const;
+  NdiManager();
+  virtual ~NdiManager() override;
+
+  void initialize();
+  void finalize();
+  TypedArray<String> available_sources() const;
+  Variant get_source(const String &name) const;
 };
 
-}
+} // namespace godot
