@@ -14,12 +14,14 @@ private:
     static NdiManager* singleton;
     NdiSourceFinder *_sourceFinder = nullptr;
 
-    NdiManager();
+protected:
+    static void _bind_methods();
 
 public:
     static NdiManager* get_singleton();
     
-    ~NdiManager();
+    NdiManager();
+    virtual ~NdiManager() override;
 
     void initialize();
     void finalize();

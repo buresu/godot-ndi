@@ -1,6 +1,7 @@
 #include "NdiManager.hpp"
 #include "NdiSourceFinder.hpp"
 
+#include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
 #include <Processing.NDI.Lib.h>
@@ -8,6 +9,13 @@
 using namespace godot;
 
 NdiManager* NdiManager::singleton = nullptr;
+
+void NdiManager::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("initialize"), &NdiManager::initialize);
+    ClassDB::bind_method(D_METHOD("finalize"), &NdiManager::finalize);
+    ClassDB::bind_method(D_METHOD("available_sources"), &NdiManager::available_sources);
+    ClassDB::bind_method(D_METHOD("get_source", "name"), &NdiManager::get_source);
+}
 
 NdiManager::NdiManager() : Object(){
     singleton = this;
@@ -21,7 +29,6 @@ NdiManager::~NdiManager() {
 NdiManager* NdiManager::get_singleton() {
     return singleton;
 }
-
 
 void NdiManager::initialize() {
     if (!NDIlib_initialize()) {
