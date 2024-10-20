@@ -46,15 +46,26 @@ set_target_properties(godot-ndi PROPERTIES
     OUTPUT_NAME "godot-ndi.${PLATFORM_PREFIX}.$<LOWER_CASE:$<CONFIG>>.x86_64"
 )
 
-set_target_properties(godot-ndi PROPERTIES
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
+if(WIN32)
+    set_target_properties(godot-ndi PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+else()
+    set_target_properties(godot-ndi PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+endif()
 
-add_custom_command(
-    TARGET godot-ndi
-    POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/res/godot-ndi.gdextension" "${CMAKE_BINARY_DIR}/bin"
-    COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LIBRARY_DIR}/libndi.so*" "${CMAKE_BINARY_DIR}/bin"
-    COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LICENSE_DIR}/*.txt" "${CMAKE_BINARY_DIR}/bin"
-)
+if(WIN32)
+    add_custom_command(
+        TARGET godot-ndi
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/res/godot-ndi.gdextension" "${PROJECT_BINARY_DIR}/bin"
+        COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LICENSE_DIR}/Processing.NDI.Lib.Licenses.txt" "${PROJECT_BINARY_DIR}/bin"
+        COMMAND ${CMAKE_COMMAND} -E copy "${NDI_BINARY_DIR}/Processing.NDI.Lib.x64.dll" "${PROJECT_BINARY_DIR}/bin"
+    )
+else()
+    add_custom_command(
+        TARGET godot-ndi
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/res/godot-ndi.gdextension" "${PROJECT_BINARY_DIR}/bin"
+        COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LICENSE_DIR}/*.txt" "${PROJECT_BINARY_DIR}/bin"
+        COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LIBRARY_DIR}/libndi.so*" "${PROJECT_BINARY_DIR}/bin"
+    )
+endif()

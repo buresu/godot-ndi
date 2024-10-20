@@ -5,11 +5,19 @@ compatibility_minimum = "4.3"
 
 [libraries]
 
-linux.debug.x86_64 = "res://addons/godot-ndi/libgodot-ndi.linux.debug.x86_64"
-linux.release.x86_64 = "res://addons/godot-ndi/libgodot-ndi.linux.release.x86_64"
+windows.debug.x86_64 = "res://addons/godot-ndi/godot-ndi.windows.debug.x86_64.dll"
+windows.release.x86_64 = "res://addons/godot-ndi/godot-ndi.windows.release.x86_64.dll"
+linux.debug.x86_64 = "res://addons/godot-ndi/libgodot-ndi.linux.debug.x86_64.so"
+linux.release.x86_64 = "res://addons/godot-ndi/libgodot-ndi.linux.release.x86_64.so"
 
 [dependencies]
 
+windows.debug = {
+    "res://addons/godot-ndi/Processing.NDI.Lib.x64.dll" : "",
+}
+windows.release = {
+    "res://addons/godot-ndi/Processing.NDI.Lib.x64.dll" : "",
+}
 linux.debug = {
     "res://addons/godot-ndi/libndi.so" : "",
 }
