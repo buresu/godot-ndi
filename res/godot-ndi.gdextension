@@ -11,8 +11,8 @@ linux.release.x86_64 = "res://addons/godot-ndi/libgodot-ndi.linux.release.x86_64
 [dependencies]
 
 linux.debug = {
-    "res://addons/godot-ndi/libndi.so.6.0.1" : "",
+    "res://addons/godot-ndi/libndi.so" : "",
 }
 linux.release = {
-    "res://addons/godot-ndi/libndi.so.6.0.1" : "",
+    "res://addons/godot-ndi/libndi.so" : "",
 }
