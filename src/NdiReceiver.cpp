@@ -97,9 +97,12 @@ void NdiReceiver::stop() {
 void NdiReceiver::_update_texture() {
   if (_is_running && _target_texture.is_valid()) {
     Ref<Image> frame = _ndi_input_stream->get_frame();
-    UtilityFunctions::print(frame);
     if (frame.is_valid()) {
-      _target_texture->set_image(frame);
+      if (frame->get_size() != _target_texture->get_size()) {
+        _target_texture->set_image(frame);
+      } else {
+        _target_texture->update(frame);
+      }
     }
   }
 }
