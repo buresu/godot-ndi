@@ -56,4 +56,5 @@ add_custom_command(
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/res/godot-ndi.gdextension" "${CMAKE_BINARY_DIR}/bin"
     COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LIBRARY_DIR}/libndi.so*" "${CMAKE_BINARY_DIR}/bin"
+    COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LICENSE_DIR}/*.txt" "${CMAKE_BINARY_DIR}/bin"
 )
