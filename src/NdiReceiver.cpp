@@ -30,23 +30,26 @@ void NdiReceiver::_bind_methods() {
 
 NdiReceiver::NdiReceiver() : Node() {}
 
-  _ndi_input_stream.instantiate();
-  _ndi_input_stream->set_bandwidth(_bandwidth);
-  _ndi_input_stream->set_source_name(_source_name);
-  _ndi_input_stream->open();
+NdiReceiver::~NdiReceiver() {}
 
-  // Connect to the frame_post_draw signal
-  RenderingServer::get_singleton()->connect("frame_pre_draw",
-                                            Callable(this, "_update_texture"));
-}
-
-NdiReceiver::~NdiReceiver() {
-
-  stop();
-
-  // Disconnect from the frame_post_draw signal
-  RenderingServer::get_singleton()->disconnect(
-      "frame_pre_draw", Callable(this, "_update_texture"));
+void NdiReceiver::_notification(int p_what) {
+  switch (p_what) {
+  case NOTIFICATION_POSTINITIALIZE:
+    _ndi_input_stream.instantiate();
+    _ndi_input_stream->set_bandwidth(_bandwidth);
+    _ndi_input_stream->set_source_name(_source_name);
+    _ndi_input_stream->open();
+    // Connect to the frame_post_draw signal
+    RenderingServer::get_singleton()->connect(
+        "frame_pre_draw", Callable(this, "_update_texture"));
+    break;
+  case NOTIFICATION_PREDELETE:
+    stop();
+    // Disconnect from the frame_post_draw signal
+    RenderingServer::get_singleton()->disconnect(
+        "frame_pre_draw", Callable(this, "_update_texture"));
+    break;
+  }
 }
 
 void NdiReceiver::_get_property_list(List<PropertyInfo> *p_list) const {
