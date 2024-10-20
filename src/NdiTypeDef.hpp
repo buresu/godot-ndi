@@ -2,7 +2,7 @@
 
 namespace godot {
 
-enum NdiBandwidth { HIGHEST, LOWEST };
+enum NdiBandwidth { BANDWIDTH_HIGHEST, BANDWIDTH_LOWEST };
 
 } // namespace godot
 

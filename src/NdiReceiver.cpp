@@ -31,8 +31,8 @@ void NdiReceiver::_bind_methods() {
                             PROPERTY_HINT_RESOURCE_TYPE, "ImageTexture"),
                "set_target_texture", "get_target_texture");
 
-  BIND_ENUM_CONSTANT(HIGHEST);
-  BIND_ENUM_CONSTANT(LOWEST);
+  BIND_ENUM_CONSTANT(BANDWIDTH_HIGHEST);
+  BIND_ENUM_CONSTANT(BANDWIDTH_LOWEST);
 }
 
 NdiReceiver::NdiReceiver() : _is_running(true) {

@@ -26,8 +26,8 @@ void NdiInputStream::_bind_methods() {
   ClassDB::bind_method(D_METHOD("_thread_function"),
                        &NdiInputStream::_thread_function);
 
-  BIND_ENUM_CONSTANT(HIGHEST);
-  BIND_ENUM_CONSTANT(LOWEST);
+  BIND_ENUM_CONSTANT(BANDWIDTH_HIGHEST);
+  BIND_ENUM_CONSTANT(BANDWIDTH_LOWEST);
 }
 
 void NdiInputStream::open() {
@@ -83,9 +83,9 @@ void NdiInputStream::_thread_function() {
 
       NDIlib_recv_create_v3_t pNDI_recv_create;
 
-      if (_bandwidth == HIGHEST) {
+      if (_bandwidth == BANDWIDTH_HIGHEST) {
         pNDI_recv_create.bandwidth = NDIlib_recv_bandwidth_highest;
-      } else if (_bandwidth == LOWEST) {
+      } else if (_bandwidth == BANDWIDTH_LOWEST) {
         pNDI_recv_create.bandwidth = NDIlib_recv_bandwidth_lowest;
       }
 

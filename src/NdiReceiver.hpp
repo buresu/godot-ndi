@@ -14,7 +14,7 @@ private:
   Ref<ImageTexture> _target_texture;
   bool _is_running;
   String _source_name;
-  NdiBandwidth _bandwidth = HIGHEST;
+  NdiBandwidth _bandwidth = BANDWIDTH_HIGHEST;
 
 protected:
   static void _bind_methods();

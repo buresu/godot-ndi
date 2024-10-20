@@ -34,7 +34,7 @@ private:
   Ref<Image> _frame;
   uint64_t _frame_count = 0;
   String _source_name;
-  NdiBandwidth _bandwidth = HIGHEST;
+  NdiBandwidth _bandwidth = BANDWIDTH_HIGHEST;
   bool _should_exit = false;
 };
 } // namespace godot
