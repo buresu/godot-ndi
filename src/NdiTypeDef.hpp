@@ -1,3 +1,5 @@
+#pragma once
+
 #include <godot_cpp/core/binder_common.hpp>
 
 namespace godot {

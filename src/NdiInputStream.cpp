@@ -1,7 +1,10 @@
 #include "NdiInputStream.hpp"
 #include "NdiManager.hpp"
 
+#include <godot_cpp/classes/image.hpp>
+#include <godot_cpp/classes/mutex.hpp>
 #include <godot_cpp/classes/os.hpp>
+#include <godot_cpp/classes/thread.hpp>
 #include <godot_cpp/core/class_db.hpp>
 
 #include <Processing.NDI.Lib.h>

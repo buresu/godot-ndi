@@ -1,6 +1,8 @@
 #include "NdiReceiver.hpp"
+#include "NdiInputStream.hpp"
 #include "NdiManager.hpp"
 
+#include <godot_cpp/classes/image_texture.hpp>
 #include <godot_cpp/classes/rendering_server.hpp>
 #include <godot_cpp/core/class_db.hpp>
 

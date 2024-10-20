@@ -2,13 +2,13 @@
 
 #include "NdiTypeDef.hpp"
 
-#include <godot_cpp/classes/image.hpp>
-#include <godot_cpp/classes/mutex.hpp>
-#include <godot_cpp/classes/object.hpp>
 #include <godot_cpp/classes/ref_counted.hpp>
-#include <godot_cpp/classes/thread.hpp>
 
 namespace godot {
+
+class Thread;
+class Mutex;
+class Image;
 
 class NdiInputStream : public RefCounted {
   GDCLASS(NdiInputStream, RefCounted)

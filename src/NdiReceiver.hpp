@@ -1,11 +1,13 @@
 #pragma once
 
-#include "NdiInputStream.hpp"
+#include "NdiTypeDef.hpp"
 
-#include <godot_cpp/classes/image_texture.hpp>
 #include <godot_cpp/classes/node.hpp>
 
 namespace godot {
+
+class NdiInputStream;
+class ImageTexture;
 
 class NdiReceiver : public Node {
   GDCLASS(NdiReceiver, Node)

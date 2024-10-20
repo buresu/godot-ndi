@@ -2,7 +2,9 @@
 
 #include <godot_cpp/godot.hpp>
 
-using namespace godot;
+namespace godot {
 
 void initialize_ndi_module(ModuleInitializationLevel p_level);
 void uninitialize_ndi_module(ModuleInitializationLevel p_level);
+
+} // namespace godot
