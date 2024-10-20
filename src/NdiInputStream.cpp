@@ -23,6 +23,8 @@ void NdiInputStream::_bind_methods() {
                        &NdiInputStream::set_source_name);
   ClassDB::bind_method(D_METHOD("set_bandwidth", "bandwidth"),
                        &NdiInputStream::set_bandwidth);
+  ClassDB::bind_method(D_METHOD("get_bandwidth"),
+                       &NdiInputStream::get_bandwidth);
   ClassDB::bind_method(D_METHOD("_thread_function"),
                        &NdiInputStream::_thread_function);
 
@@ -72,6 +74,8 @@ void NdiInputStream::set_source_name(const String &name) {
 void NdiInputStream::set_bandwidth(NdiBandwidth bandwidth) {
   _bandwidth = bandwidth;
 }
+
+NdiBandwidth NdiInputStream::get_bandwidth() const { return _bandwidth; }
 
 void NdiInputStream::_thread_function() {
 

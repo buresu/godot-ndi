@@ -25,8 +25,9 @@ void NdiReceiver::_bind_methods() {
 
   ADD_PROPERTY(PropertyInfo(Variant::STRING, "source_name"), "set_source_name",
                "get_source_name");
-  ADD_PROPERTY(PropertyInfo(Variant::INT, "bandwidth"), "set_bandwidth",
-               "get_bandwidth");
+  ADD_PROPERTY(PropertyInfo(Variant::INT, "bandwidth", PROPERTY_HINT_ENUM,
+                            "Highest,Lowest"),
+               "set_bandwidth", "get_bandwidth");
   ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "target_texture",
                             PROPERTY_HINT_RESOURCE_TYPE, "ImageTexture"),
                "set_target_texture", "get_target_texture");
@@ -37,7 +38,7 @@ void NdiReceiver::_bind_methods() {
 
 NdiReceiver::NdiReceiver() : _is_running(true) {
   _ndi_input_stream.instantiate();
-  _ndi_input_stream->set_source_name("test");
+  _ndi_input_stream->set_bandwidth(_bandwidth);
   _ndi_input_stream->open();
 
   // Connect to the frame_post_draw signal
@@ -63,8 +64,10 @@ String NdiReceiver::get_source_name() const { return _source_name; }
 
 void NdiReceiver::set_bandwidth(NdiBandwidth bandwidth) {
   _bandwidth = bandwidth;
-  _ndi_input_stream->set_bandwidth(bandwidth);
-  _ndi_input_stream->reopen();
+  if (_ndi_input_stream->get_bandwidth() != bandwidth) {
+    _ndi_input_stream->set_bandwidth(bandwidth);
+    _ndi_input_stream->call_deferred("reopen");
+  }
 }
 
 NdiBandwidth NdiReceiver::get_bandwidth() const { return _bandwidth; }

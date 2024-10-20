@@ -19,14 +19,16 @@ public:
   void open();
   void close();
   void reopen();
+
   uint64_t get_frame_count() const;
   Ref<Image> get_frame() const;
   void set_source_name(const String &name);
   void set_bandwidth(NdiBandwidth bandwidth);
-  void _thread_function();
+  NdiBandwidth get_bandwidth() const;
 
 protected:
   static void _bind_methods();
+  void _thread_function();
 
 private:
   Ref<Thread> _thread;
