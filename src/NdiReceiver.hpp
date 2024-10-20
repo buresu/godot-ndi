@@ -3,16 +3,16 @@
 #include "NdiInputStream.hpp"
 
 #include <godot_cpp/classes/image_texture.hpp>
-#include <godot_cpp/classes/resource.hpp>
+#include <godot_cpp/classes/node.hpp>
 
 namespace godot {
 
-class NdiReceiver : public Resource {
-  GDCLASS(NdiReceiver, Resource)
+class NdiReceiver : public Node {
+  GDCLASS(NdiReceiver, Node)
 private:
   Ref<NdiInputStream> _ndi_input_stream;
   Ref<ImageTexture> _target_texture;
-  bool _is_running;
+  bool _is_running = true;
   String _source_name;
   NdiBandwidth _bandwidth = BANDWIDTH_HIGHEST;
 

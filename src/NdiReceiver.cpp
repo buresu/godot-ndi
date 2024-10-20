@@ -28,7 +28,7 @@ void NdiReceiver::_bind_methods() {
   BIND_ENUM_CONSTANT(BANDWIDTH_LOWEST);
 }
 
-NdiReceiver::NdiReceiver() : _is_running(true) {
+NdiReceiver::NdiReceiver() : Node() {}
 
   _ndi_input_stream.instantiate();
   _ndi_input_stream->set_bandwidth(_bandwidth);
