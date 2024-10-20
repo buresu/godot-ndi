@@ -18,6 +18,10 @@ private:
 
 protected:
   static void _bind_methods();
+  void _update_texture();
+  void _get_property_list(List<PropertyInfo> *p_list) const;
+  bool _set(const StringName &p_name, const Variant &p_value);
+  bool _get(const StringName &p_name, Variant &r_ret) const;
 
 public:
   NdiReceiver();
@@ -31,7 +35,6 @@ public:
   Ref<ImageTexture> get_target_texture() const;
   void start();
   void stop();
-  void _update_texture();
 
   bool is_running() const { return _is_running; }
 };

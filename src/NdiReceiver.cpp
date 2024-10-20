@@ -1,7 +1,8 @@
 #include "NdiReceiver.hpp"
+#include "NdiManager.hpp"
+
 #include <godot_cpp/classes/rendering_server.hpp>
 #include <godot_cpp/core/class_db.hpp>
-#include <godot_cpp/variant/utility_functions.hpp>
 
 using namespace godot;
 
@@ -23,22 +24,15 @@ void NdiReceiver::_bind_methods() {
   ClassDB::bind_method(D_METHOD("_update_texture"),
                        &NdiReceiver::_update_texture);
 
-  ADD_PROPERTY(PropertyInfo(Variant::STRING, "source_name"), "set_source_name",
-               "get_source_name");
-  ADD_PROPERTY(PropertyInfo(Variant::INT, "bandwidth", PROPERTY_HINT_ENUM,
-                            "Highest,Lowest"),
-               "set_bandwidth", "get_bandwidth");
-  ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "target_texture",
-                            PROPERTY_HINT_RESOURCE_TYPE, "ImageTexture"),
-               "set_target_texture", "get_target_texture");
-
   BIND_ENUM_CONSTANT(BANDWIDTH_HIGHEST);
   BIND_ENUM_CONSTANT(BANDWIDTH_LOWEST);
 }
 
 NdiReceiver::NdiReceiver() : _is_running(true) {
+
   _ndi_input_stream.instantiate();
   _ndi_input_stream->set_bandwidth(_bandwidth);
+  _ndi_input_stream->set_source_name(_source_name);
   _ndi_input_stream->open();
 
   // Connect to the frame_post_draw signal
@@ -47,6 +41,7 @@ NdiReceiver::NdiReceiver() : _is_running(true) {
 }
 
 NdiReceiver::~NdiReceiver() {
+
   stop();
 
   // Disconnect from the frame_post_draw signal
@@ -54,10 +49,55 @@ NdiReceiver::~NdiReceiver() {
       "frame_pre_draw", Callable(this, "_update_texture"));
 }
 
+void NdiReceiver::_get_property_list(List<PropertyInfo> *p_list) const {
+
+  auto ndi_manager = NdiManager::get_singleton();
+
+  p_list->push_back(
+      PropertyInfo(Variant::STRING, "source_name", PROPERTY_HINT_ENUM,
+                   String(",").join(ndi_manager->get_available_sources())));
+
+  p_list->push_back(PropertyInfo(Variant::INT, "bandwidth", PROPERTY_HINT_ENUM,
+                                 "Highest,Lowest"));
+
+  p_list->push_back(PropertyInfo(Variant::OBJECT, "target_texture",
+                                 PROPERTY_HINT_RESOURCE_TYPE, "ImageTexture"));
+}
+
+bool NdiReceiver::_set(const StringName &p_name, const Variant &p_value) {
+  if (p_name == StringName("source_name")) {
+    set_source_name(p_value);
+    return true;
+  } else if (p_name == StringName("bandwidth")) {
+    set_bandwidth(static_cast<NdiBandwidth>(static_cast<uint32_t>(p_value)));
+    return true;
+  } else if (p_name == StringName("target_texture")) {
+    set_target_texture(p_value);
+    return true;
+  }
+  return false;
+}
+
+bool NdiReceiver::_get(const StringName &p_name, Variant &r_ret) const {
+  if (p_name == StringName("source_name")) {
+    r_ret = get_source_name();
+    return true;
+  } else if (p_name == StringName("bandwidth")) {
+    r_ret = get_bandwidth();
+    return true;
+  } else if (p_name == StringName("target_texture")) {
+    r_ret = get_target_texture();
+    return true;
+  }
+  return false;
+}
+
 void NdiReceiver::set_source_name(const String &name) {
   _source_name = name;
-  _ndi_input_stream->set_source_name(name);
-  _ndi_input_stream->reopen();
+  if (_ndi_input_stream->get_source_name() != name) {
+    _ndi_input_stream->set_source_name(name);
+    _ndi_input_stream->call_deferred("reopen");
+  }
 }
 
 String NdiReceiver::get_source_name() const { return _source_name; }

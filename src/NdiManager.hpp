@@ -26,7 +26,8 @@ public:
 
   void initialize();
   void finalize();
-  TypedArray<String> available_sources() const;
+
+  TypedArray<String> get_available_sources() const;
   Variant get_source(const String &name) const;
 };
 

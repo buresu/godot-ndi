@@ -21,6 +21,8 @@ void NdiInputStream::_bind_methods() {
   ClassDB::bind_method(D_METHOD("get_frame"), &NdiInputStream::get_frame);
   ClassDB::bind_method(D_METHOD("set_source_name", "name"),
                        &NdiInputStream::set_source_name);
+  ClassDB::bind_method(D_METHOD("get_source_name"),
+                       &NdiInputStream::get_source_name);
   ClassDB::bind_method(D_METHOD("set_bandwidth", "bandwidth"),
                        &NdiInputStream::set_bandwidth);
   ClassDB::bind_method(D_METHOD("get_bandwidth"),
@@ -70,6 +72,8 @@ Ref<Image> NdiInputStream::get_frame() const {
 void NdiInputStream::set_source_name(const String &name) {
   _source_name = name;
 }
+
+String NdiInputStream::get_source_name() const { return _source_name; }
 
 void NdiInputStream::set_bandwidth(NdiBandwidth bandwidth) {
   _bandwidth = bandwidth;

@@ -13,8 +13,8 @@ NdiManager *NdiManager::singleton = nullptr;
 void NdiManager::_bind_methods() {
   ClassDB::bind_method(D_METHOD("initialize"), &NdiManager::initialize);
   ClassDB::bind_method(D_METHOD("finalize"), &NdiManager::finalize);
-  ClassDB::bind_method(D_METHOD("available_sources"),
-                       &NdiManager::available_sources);
+  ClassDB::bind_method(D_METHOD("get_available_sources"),
+                       &NdiManager::get_available_sources);
   ClassDB::bind_method(D_METHOD("get_source", "name"), &NdiManager::get_source);
 }
 
@@ -44,7 +44,7 @@ void NdiManager::finalize() {
   NDIlib_destroy();
 }
 
-TypedArray<String> NdiManager::available_sources() const {
+TypedArray<String> NdiManager::get_available_sources() const {
   TypedArray<String> sources;
   if (_sourceFinder != nullptr) {
     Dictionary source_map = _sourceFinder->get_source_map();

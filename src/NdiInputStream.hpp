@@ -23,6 +23,7 @@ public:
   uint64_t get_frame_count() const;
   Ref<Image> get_frame() const;
   void set_source_name(const String &name);
+  String get_source_name() const;
   void set_bandwidth(NdiBandwidth bandwidth);
   NdiBandwidth get_bandwidth() const;
 
