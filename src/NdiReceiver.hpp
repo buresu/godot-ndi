@@ -26,7 +26,7 @@ protected:
 
 public:
   NdiReceiver();
-  ~NdiReceiver();
+  virtual ~NdiReceiver() override;
 
   void set_source_name(const String &name);
   String get_source_name() const;
