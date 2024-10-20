@@ -10,9 +10,10 @@
 
 using namespace godot;
 
-static NdiManager *ndi_manager_singleton = nullptr;
+static NdiManager *p_ndi_manager_singleton = nullptr;
 
 void initialize_ndi_module(ModuleInitializationLevel p_level) {
+
   if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
     return;
   }
@@ -22,23 +23,24 @@ void initialize_ndi_module(ModuleInitializationLevel p_level) {
   ClassDB::register_class<NdiInputStream>();
   ClassDB::register_class<NdiReceiver>();
 
-  ndi_manager_singleton = memnew(NdiManager);
+  p_ndi_manager_singleton = memnew(NdiManager);
   Engine::get_singleton()->register_singleton("NdiManager",
-                                              ndi_manager_singleton);
+                                              p_ndi_manager_singleton);
 
-  ndi_manager_singleton->initialize();
+  p_ndi_manager_singleton->initialize();
 }
 
 void uninitialize_ndi_module(ModuleInitializationLevel p_level) {
+
   if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
     return;
   }
 
-  ndi_manager_singleton->finalize();
+  p_ndi_manager_singleton->finalize();
 
-  if (ndi_manager_singleton) {
+  if (p_ndi_manager_singleton) {
     Engine::get_singleton()->unregister_singleton("NdiManager");
-    memdelete(ndi_manager_singleton);
+    memdelete(p_ndi_manager_singleton);
   }
 }
 
@@ -47,6 +49,7 @@ GDExtensionBool GDE_EXPORT
 ndi_library_init(GDExtensionInterfaceGetProcAddress p_get_proc_address,
                  const GDExtensionClassLibraryPtr p_library,
                  GDExtensionInitialization *r_initialization) {
+
   GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library,
                                           r_initialization);
 
