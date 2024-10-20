@@ -3,7 +3,6 @@
 
 #include <godot_cpp/classes/os.hpp>
 #include <godot_cpp/core/class_db.hpp>
-#include <godot_cpp/variant/utility_functions.hpp>
 
 #include <Processing.NDI.Lib.h>
 
@@ -70,7 +69,7 @@ void NdiInputStream::set_source_name(const String &name) {
   _source_name = name;
 }
 
-void NdiInputStream::set_bandwidth(Bandwidth bandwidth) {
+void NdiInputStream::set_bandwidth(NdiBandwidth bandwidth) {
   _bandwidth = bandwidth;
 }
 

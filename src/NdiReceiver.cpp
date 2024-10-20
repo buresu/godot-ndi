@@ -31,12 +31,11 @@ void NdiReceiver::_bind_methods() {
                             PROPERTY_HINT_RESOURCE_TYPE, "ImageTexture"),
                "set_target_texture", "get_target_texture");
 
-  BIND_ENUM_CONSTANT(NdiInputStream::HIGHEST);
-  BIND_ENUM_CONSTANT(NdiInputStream::LOWEST);
+  BIND_ENUM_CONSTANT(HIGHEST);
+  BIND_ENUM_CONSTANT(LOWEST);
 }
 
-NdiReceiver::NdiReceiver()
-    : _is_running(true), _bandwidth(NdiInputStream::HIGHEST) {
+NdiReceiver::NdiReceiver() : _is_running(true) {
   _ndi_input_stream.instantiate();
   _ndi_input_stream->set_source_name("test");
   _ndi_input_stream->open();
@@ -62,15 +61,13 @@ void NdiReceiver::set_source_name(const String &name) {
 
 String NdiReceiver::get_source_name() const { return _source_name; }
 
-void NdiReceiver::set_bandwidth(NdiInputStream::Bandwidth bandwidth) {
+void NdiReceiver::set_bandwidth(NdiBandwidth bandwidth) {
   _bandwidth = bandwidth;
   _ndi_input_stream->set_bandwidth(bandwidth);
   _ndi_input_stream->reopen();
 }
 
-NdiInputStream::Bandwidth NdiReceiver::get_bandwidth() const {
-  return _bandwidth;
-}
+NdiBandwidth NdiReceiver::get_bandwidth() const { return _bandwidth; }
 
 void NdiReceiver::set_target_texture(const Ref<ImageTexture> &texture) {
   _target_texture = texture;
