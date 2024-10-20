@@ -54,6 +54,6 @@ set_target_properties(godot-ndi PROPERTIES
 add_custom_command(
     TARGET godot-ndi
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/res/ndi.gdextension" "${CMAKE_BINARY_DIR}/bin"
+    COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/res/godot-ndi.gdextension" "${CMAKE_BINARY_DIR}/bin"
     COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LIBRARY_DIR}/libndi.so*" "${CMAKE_BINARY_DIR}/bin"
 )
