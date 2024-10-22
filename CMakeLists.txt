@@ -56,7 +56,6 @@ if(WIN32)
     add_custom_command(
         TARGET godot-ndi
         POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/res/godot-ndi.gdextension" "${PROJECT_SOURCE_DIR}/bin"
         COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LICENSE_DIR}/Processing.NDI.Lib.Licenses.txt" "${PROJECT_SOURCE_DIR}/bin"
         COMMAND ${CMAKE_COMMAND} -E copy "${NDI_BINARY_DIR}/Processing.NDI.Lib.x64.dll" "${PROJECT_SOURCE_DIR}/bin"
     )
@@ -64,7 +63,6 @@ else()
     add_custom_command(
         TARGET godot-ndi
         POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/res/godot-ndi.gdextension" "${PROJECT_SOURCE_DIR}/bin"
         COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LICENSE_DIR}/*.txt" "${PROJECT_SOURCE_DIR}/bin"
         COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LIBRARY_DIR}/libndi.so*" "${PROJECT_SOURCE_DIR}/bin"
     )
