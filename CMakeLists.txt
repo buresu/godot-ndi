@@ -8,16 +8,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    set(PLATFORM_PREFIX "linux")
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    set(PLATFORM_PREFIX "windows")
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-    set(PLATFORM_PREFIX "macos")
-else()
-    set(PLATFORM_PREFIX "unknown")
-endif()
+set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
+set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/lib/godot-cpp")
 
@@ -42,14 +34,26 @@ target_link_directories(godot-ndi PRIVATE ${NDI_LIBRARY_DIR})
 target_link_libraries(godot-ndi PRIVATE godot::cpp)
 target_link_libraries(godot-ndi PRIVATE ${NDI_LIBS})
 
-set_target_properties(godot-ndi PROPERTIES
-    OUTPUT_NAME "godot-ndi.${PLATFORM_PREFIX}.$<LOWER_CASE:$<CONFIG>>.x86_64"
-)
-
 if(WIN32)
     set_target_properties(godot-ndi PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-else()
+    set_target_properties(godot-ndi PROPERTIES OUTPUT_NAME "godot-ndi.windows.$<LOWER_CASE:$<CONFIG>>.x86_64")
+elseif(APPLE)
     set_target_properties(godot-ndi PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+    set_target_properties(godot-ndi PROPERTIES OUTPUT_NAME "godot-ndi.macos.$<LOWER_CASE:$<CONFIG>>")
+elseif(UNIX)
+    set_target_properties(godot-ndi PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+    set_target_properties(godot-ndi PROPERTIES OUTPUT_NAME "godot-ndi.linux.$<LOWER_CASE:$<CONFIG>>.x86_64")
+endif()
+
+set_target_properties(godot-ndi PROPERTIES SKIP_RPATH TRUE)
+set_target_properties(godot-ndi PROPERTIES BUILD_RPATH_USE_ORIGIN TRUE)
+set_target_properties(godot-ndi PROPERTIES SKIP_BUILD_RPATH FALSE)
+set_target_properties(godot-ndi PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
+set_target_properties(godot-ndi PROPERTIES INSTALL_RPATH_USE_LINK_PATH FALSE)
+if(APPLE)
+  set_target_properties(godot-ndi PROPERTIES INSTALL_RPATH "@loader_path")
+elseif(UNIX)
+  set_target_properties(godot-ndi PROPERTIES INSTALL_RPATH "$ORIGIN")
 endif()
 
 if(WIN32)
@@ -59,7 +63,14 @@ if(WIN32)
         COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LICENSE_DIR}/Processing.NDI.Lib.Licenses.txt" "${PROJECT_SOURCE_DIR}/bin"
         COMMAND ${CMAKE_COMMAND} -E copy "${NDI_BINARY_DIR}/Processing.NDI.Lib.x64.dll" "${PROJECT_SOURCE_DIR}/bin"
     )
-else()
+elseif(APPLE)
+    add_custom_command(
+        TARGET godot-ndi
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LICENSE_DIR}/*.txt" "${PROJECT_SOURCE_DIR}/bin"
+        COMMAND ${CMAKE_COMMAND} -E copy "${NDI_LIBRARY_DIR}/libndi.dylib" "${PROJECT_SOURCE_DIR}/bin"
+    )
+elseif(UNIX)
     add_custom_command(
         TARGET godot-ndi
         POST_BUILD

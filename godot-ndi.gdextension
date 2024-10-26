@@ -7,11 +7,19 @@ compatibility_minimum = "4.3"
 
 windows.debug.x86_64 = "res://addons/godot-ndi/bin/godot-ndi.windows.debug.x86_64.dll"
 windows.release.x86_64 = "res://addons/godot-ndi/bin/godot-ndi.windows.release.x86_64.dll"
+macos.debug = "res://addons/godot-ndi/bin/libgodot-ndi.macos.debug.dylib"
+macos.release = "res://addons/godot-ndi/bin/libgodot-ndi.macos.release.dylib"
 linux.debug.x86_64 = "res://addons/godot-ndi/bin/libgodot-ndi.linux.debug.x86_64.so"
 linux.release.x86_64 = "res://addons/godot-ndi/bin/libgodot-ndi.linux.release.x86_64.so"
 
 [dependencies]
 
+macos.debug = {
+    "res://addons/godot-ndi/bin/libndi.dylib" : "Contents/Frameworks"
+}
+macos.release = {
+    "res://addons/godot-ndi/bin/libndi.dylib" : "Contents/Frameworks"
+}
 windows.debug = {
     "res://addons/godot-ndi/bin/Processing.NDI.Lib.x64.dll" : "",
 }
